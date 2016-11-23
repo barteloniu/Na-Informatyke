@@ -43,8 +43,8 @@ public class Gracz : MonoBehaviour
         {
             foreach (Touch t in Input.touches)
             {
-                if (t.position.x < Screen.width / 2) lewo = true;
-                else prawo = true;
+                if (t.position.x < Screen.width / 2) prawo = true;
+                else lewo = true;
             }
         }
         else
