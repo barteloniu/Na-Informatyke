@@ -11,8 +11,8 @@ public class AI : MonoBehaviour
     GameObject pociskiMatka;
     GameObject gracz;
 
-    bool lewo;
-    bool prawo;
+    public bool lewo;
+    public bool prawo;
 
     GameObject[] silniki = new GameObject[2];
 
@@ -43,32 +43,42 @@ public class AI : MonoBehaviour
         prawo = false;
 
         Vector3 target = gracz.transform.position - transform.position;
-        float rot = Quaternion.LookRotation(target).eulerAngles.y;
+        float rot = Quaternion.LookRotation(target).eulerAngles.y - transform.rotation.eulerAngles.y;
+        if (rot < 0) rot += 360;
         Debug.Log(rot);
-        if(rot > 345 || rot < 15)
+
+
+        if(rot < 30 || rot > 330)
         {
-            Debug.Log("a");
             lewo = true;
             prawo = true;
         }
-        else if(rot < 345 && rot > 180)
+        else if(rot < 330 && rot > 180)
         {
             prawo = true;
         }
-        /*
         else
         {
             lewo = true;
         }
-        */
-        //ruch-----------------------------------------------------------------------
+
+
+        //ruch i swiatlo silnikow-------------------------------------------------------
+        foreach(Light l in GetComponentsInChildren<Light>())
+        {
+            l.enabled = false;
+        }
         if (lewo)
         {
-            rb.AddForceAtPosition(transform.forward * 1000 * Time.deltaTime, silniki[1].transform.position);
+            transform.FindChild("Spotlight").GetComponent<Light>().enabled = true;
+            transform.FindChild("Point light").GetComponent<Light>().enabled = true;
+            rb.AddForceAtPosition(transform.forward * 700 * Time.deltaTime, silniki[0].transform.position);
         }
         if (prawo)
         {
-            rb.AddForceAtPosition(transform.forward * 1000 * Time.deltaTime, silniki[0].transform.position);
+            transform.FindChild("Spotlight (1)").GetComponent<Light>().enabled = true;
+            transform.FindChild("Point light (1)").GetComponent<Light>().enabled = true;
+            rb.AddForceAtPosition(transform.forward * 700 * Time.deltaTime, silniki[1].transform.position);
         }
         //pociski ruch----------------------------------------------------------------
         foreach (GameObject p in pociski)
@@ -93,7 +103,7 @@ public class AI : MonoBehaviour
             ktoryPocisk++;
             if (ktoryPocisk == 20) ktoryPocisk = 0;
 
-            yield return new WaitForSeconds(0.3f);
+            yield return new WaitForSeconds(0.5f);
         }
     }
 }
