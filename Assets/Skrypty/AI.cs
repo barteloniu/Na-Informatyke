@@ -100,6 +100,7 @@ public class AI : MonoBehaviour
             pociski[ktoryPocisk].transform.position = transform.position;
             pociski[ktoryPocisk].transform.rotation = transform.rotation;
             pociski[ktoryPocisk].GetComponent<Renderer>().material.color = kolor;
+            pociski[ktoryPocisk].GetComponentInChildren<Light>().color = kolor;
             ktoryPocisk++;
             if (ktoryPocisk == 20) ktoryPocisk = 0;
 
