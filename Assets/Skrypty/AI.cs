@@ -99,12 +99,11 @@ public class AI : MonoBehaviour
             }
             pociski[ktoryPocisk].transform.position = transform.position;
             pociski[ktoryPocisk].transform.rotation = transform.rotation;
-            pociski[ktoryPocisk].GetComponent<Renderer>().material.color = kolor;
             pociski[ktoryPocisk].GetComponentInChildren<Light>().color = kolor;
             ktoryPocisk++;
             if (ktoryPocisk == 20) ktoryPocisk = 0;
 
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.7f);
         }
     }
 }
